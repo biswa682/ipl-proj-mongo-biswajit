@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>No Of Winner per year</title>
+	<meta charset="utf-8">
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+	<style>
+	body{
+        background: #d9d9d9;
+    }
+	#container1 {
+		height: 600px;
+		margin: 0 auto
+	}
+	</style>
+</head>
+<body>
+	<p><%=data%></p>
+	<div class="container1" id="container1">
+	
+	</div>
+</body>
+<script type="text/javascript">
+let winnerPerYear = <%-data%>;
+	let season = [];
+	let teamName = [];
+	for(let i in winnerPerYear){
+		season.push(i);
+		for(let j in winnerPerYear[i]){
+			if(!teamName.includes(j)){
+				teamName.push(j);
+			}
+		}
+	}
+	let arr = [];
+	let mainData = [];
+	for(let j in teamName){	
+		for(let i in season){
+			if(winnerPerYear[season[i]].hasOwnProperty(teamName[j])){
+				arr.push(winnerPerYear[season[i]][teamName[j]]);
+			}
+			else{
+				arr.push(0);
+			}
+		}
+		let obj = {
+			'name': teamName[j],
+			'data':arr
+		}
+		mainData.push(obj);
+		arr = [];
+	}
+	console.log("ok")
+Highcharts.chart('container1', {
+    chart: {
+        type: 'bar'
+    },
+    title: {
+        text: 'Stacked bar chart Of IPL data'
+    },
+    xAxis: {
+        categories: season
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'IPL all seasons'
+        }
+    },
+    legend: {
+        reversed: true
+    },
+    plotOptions: {
+        series: {
+            stacking: 'normal'
+        }
+    },
+    series: mainData
+});
+
+	
+</script>
+</html>
+

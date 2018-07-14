@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Strike Rate of Batsman</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/highcharts-more.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<style>
+	body{
+        background: #d9d9d9;
+    }
+	#container1 {
+		min-width: 310px;
+		max-width: 800px;
+		height: 400px;
+		margin: 0 auto
+	}
+	body{
+        background: #d9d9d9;
+    }
+	.btn{
+		padding: 30px;
+		text-align: center;
+	}
+	button{
+		background: #00e600;
+		border: none;
+		height: 40px;
+		width: 100px;
+		border-radius: 5px;
+		margin: 10px;
+		font-size: 18px;
+		color: white;
+	}
+	button:hover{
+		background: #001a66;
+		color: #00e600;
+	}
+	</style>
+</head>
+<body>
+	<!-- <p><%=data%></p> -->
+	<div class="container1" id="container1">
+	
+	</div>
+	<div class="btn">
+		<button id="plain">Plain</button>
+		<button id="inverted">Inverted</button>
+		<button id="polar">Polar</button>
+	</div>
+</body>
+<script type="text/javascript">
+	let strikerateOfBatsman = <%-data%>;
+	let batsmanName = [];
+	let runrateRate = [];
+	for(let i of strikerateOfBatsman){
+		batsmanName.push(i.name);
+		runrateRate.push(i.y);
+	}
+	var chart = Highcharts.chart('container1', {
+
+	    title: {
+	        text: 'Top 10 Strike Rate in the year 2017'
+	    },
+
+	    subtitle: {
+	        text: 'Strike Rate list'
+	    },
+
+	    xAxis: {
+	        categories: batsmanName
+	    },
+
+	    series: [{
+	        type: 'column',
+	        colorByPoint: true,
+	        data: runrateRate,
+	        showInLegend: false
+	    }]
+
+	});
+
+
+	$('#plain').click(function () {
+	    chart.update({
+	        chart: {
+	            inverted: false,
+	            polar: false
+	        },
+	        subtitle: {
+	            text: 'Plain'
+	        }
+	    });
+	});
+
+	$('#inverted').click(function () {
+	    chart.update({
+	        chart: {
+	            inverted: true,
+	            polar: false
+	        },
+	        subtitle: {
+	            text: 'Inverted'
+	        }
+	    });
+	});
+
+	$('#polar').click(function () {
+	    chart.update({
+	        chart: {
+	            inverted: false,
+	            polar: true
+	        },
+	        subtitle: {
+	            text: 'Polar'
+	        }
+	    });
+	});
+</script>
+</html>
