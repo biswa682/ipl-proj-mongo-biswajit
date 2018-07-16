@@ -7,7 +7,8 @@
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/modules/data.js"></script>
 	<script src="https://code.highcharts.com/modules/drilldown.js"></script>
-	<style>
+	<link rel="stylesheet" type="text/css" href="style.css">
+    <!-- <style>
     body{
         background: #d9d9d9;
     }
@@ -17,13 +18,13 @@
 		width: 80%;
 		margin: 0 auto
 	}
-	</style>
+	</style> -->
 </head>
 <body>
-    <!-- <p><%=data%></p> -->
-	<div class="container1" id="container1">
-		
-	</div>
+ 	<div class="container1" id="container1"></div>
+    <div class="home-btn">
+        <button id="home" class="home"> <a id="home" class="home" href="/">Home</a></button>
+    </div>
 </body>
 <script type="text/javascript">
 	let arr = <%-data%>;
@@ -38,7 +39,10 @@
         text: ''
     },
     xAxis: {
-        type: 'category'
+        type: 'category',
+        title: {
+            text: 'Team Name'
+        }
     },
     yAxis: {
         title: {
@@ -54,19 +58,13 @@
             borderWidth: 0,
             dataLabels: {
                 enabled: true,
-                format: '{point.y:.1f}'
             }
         }
     },
 
-    tooltip: {
-        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
-    },
-
     "series": [
         {
-            "name": "Browsers",
+            "name": "Run",
             "colorByPoint": true,
             "data": arr
         }

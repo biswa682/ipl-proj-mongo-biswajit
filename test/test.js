@@ -3,8 +3,8 @@ const operations = require("../src/operations");
 const path = require("path");
 const MongoClient = require('mongodb').MongoClient;
 
-describe("Checking the no of matches", function(){
-	it("Check the output data", async function(){
+describe("getNoOfMatchesPerYear", function(){
+	it("should return the number of IPL matches per year", async function(){
 		const expectedOutput= [
 			{
 				name: 2013,

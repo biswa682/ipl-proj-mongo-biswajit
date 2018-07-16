@@ -8,45 +8,18 @@
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/highcharts-more.js"></script>
 	<script src="https://code.highcharts.com/modules/exporting.js"></script>
-	
-	<style>
-	body{
-        background: #d9d9d9;
-    }
-	#container1 {
-		min-width: 310px;
-		max-width: 800px;
-		height: 400px;
-		margin: 0 auto
-	}
-	.btn{
-		padding: 30px;
-		text-align: center;
-	}
-	button{
-		background: #00e600;
-		border: none;
-		height: 40px;
-		width: 100px;
-		border-radius: 5px;
-		margin: 10px;
-		font-size: 18px;
-		color: white;
-	}
-	button:hover{
-		background: #001a66;
-		color: #00e600;
-	}
-	</style>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<!-- <p><%=data%></p> -->
 	<div class="container1" id="container1"></div>
 	<div class="btn">
 		<button id="plain">Plain</button>
 		<button id="inverted">Inverted</button>
 		<button id="polar">Polar</button>
 	</div>
+	<div class="home-btn">
+        <button id="home" class="home"> <a id="home" class="home" href="/">Home</a></button>
+    </div>
 </body>
 <script type="text/javascript">
 	let economicalBowler = <%-data%>;
@@ -54,8 +27,10 @@
 	let bowlerEconomicRate = [];
 	for(let i of economicalBowler){
 		bowlerName.push(i.name);
-		bowlerEconomicRate.push(i.y);
+		let x = parseFloat(i.y.toFixed(2));
+		bowlerEconomicRate.push(x);
 	}
+	console.log(bowlerEconomicRate);
 	var chart = Highcharts.chart('container1', {
 
 	    title: {
@@ -67,9 +42,16 @@
 	    },
 
 	    xAxis: {
-	        categories: bowlerName
+	        categories: bowlerName,
+	        title: {
+         	   text: 'List of Bowler'
+        	}
 	    },
-
+	    yAxis: {
+	        title: {
+	            text: 'Economical bowler rate'
+	        }
+	    },
 	    series: [{
 	        type: 'column',
 	        colorByPoint: true,

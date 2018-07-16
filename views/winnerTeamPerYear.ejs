@@ -6,21 +6,14 @@
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/modules/exporting.js"></script>
 	<script src="https://code.highcharts.com/modules/export-data.js"></script>
-
-	<style>
-	body{
-        background: #d9d9d9;
-    }
-	#container1 {
-		height: 600px;
-		margin: 0 auto
-	}
-	</style>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 	<div class="container1" id="container1">
-	
 	</div>
+	<div class="home-btn">
+        <button id="home" class="home"> <a id="home" class="home" href="/">Home</a></button>
+    </div>
 </body>
 <script type="text/javascript">
 let winnerPerYear = <%-data%>;

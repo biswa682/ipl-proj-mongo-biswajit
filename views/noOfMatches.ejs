@@ -7,24 +7,14 @@
 	<script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
-
-	<style>
-    body{
-        background: #d9d9d9;
-    }
-	#container1 {
-		min-width: 310px;
-		max-width: 800px;
-		height: 400px;
-		margin: 0 auto;
-        /*background: transparent;*/
-	}  
-	</style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <!-- <p><%= data%></p> -->
 	<div class="container1" id="container1">
 	</div>
+    <div class="home-btn">
+        <button id="home" class="home"> <a id="home" class="home" href="/">Home</a></button>
+    </div>
 </body>
 <script type="text/javascript">
     const data = <%-data%>;
