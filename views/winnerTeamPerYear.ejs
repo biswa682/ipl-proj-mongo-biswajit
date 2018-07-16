@@ -18,42 +18,45 @@
 	</style>
 </head>
 <body>
-	<p><%=data%></p>
 	<div class="container1" id="container1">
 	
 	</div>
 </body>
 <script type="text/javascript">
 let winnerPerYear = <%-data%>;
-	let season = [];
-	let teamName = [];
-	for(let i in winnerPerYear){
-		season.push(i);
-		for(let j in winnerPerYear[i]){
-			if(!teamName.includes(j)){
-				teamName.push(j);
+	let allSeason = [];
+	for(i of winnerPerYear){
+		for(j of i.years){
+			if(!allSeason.includes(j)){
+				allSeason.push(j);
 			}
 		}
 	}
-	let arr = [];
+	allSeason.sort();
 	let mainData = [];
-	for(let j in teamName){	
-		for(let i in season){
-			if(winnerPerYear[season[i]].hasOwnProperty(teamName[j])){
-				arr.push(winnerPerYear[season[i]][teamName[j]]);
+	for(i in winnerPerYear){
+		if(winnerPerYear[i]._id !== ""){
+		let arr = [];
+		let k =0;
+		for(j in allSeason){
+			if(allSeason[j] === winnerPerYear[i].years[k]){
+				arr[j] = winnerPerYear[i].number[k];
+				k++;
 			}
 			else{
-				arr.push(0);
+				arr[j] = 0;
 			}
 		}
+
 		let obj = {
-			'name': teamName[j],
-			'data':arr
+			name: winnerPerYear[i]._id,
+			data: arr
 		}
 		mainData.push(obj);
-		arr = [];
+		obj = {}; 
 	}
-	console.log("ok")
+}
+	console.log(mainData);
 Highcharts.chart('container1', {
     chart: {
         type: 'bar'
@@ -62,7 +65,7 @@ Highcharts.chart('container1', {
         text: 'Stacked bar chart Of IPL data'
     },
     xAxis: {
-        categories: season
+        categories: allSeason
     },
     yAxis: {
         min: 0,

@@ -1,73 +1,86 @@
-async function getNoOfMatchesPerYear(MongoClient,dbName,testMatchFile, url){
-	 const conn = await MongoClient.connect(url, {useNewUrlParser: true});
-	 const iplData = conn.db(dbName);
-	 let matchData = await iplData.collection(testMatchFile).aggregate([
-		{
-			$group:{
-				_id:"$season",
-				winner: {
-					$sum: 1
-				}
-			}
-		},
-		{
-			$project:{
-				_id: 0,
-				name: "$_id",
-				y: "$winner"
-			}
-		},
-		{
-			$sort:{
-				name: 1
-			}
-		}
-		]).toArray();
-	 return matchData;
+async function getNoOfMatchesPerYear(MongoClient,dbName,testMatchFile, url, res){
+     const conn = await MongoClient.connect(url, {useNewUrlParser: true}, function(err, conn){
+        if(err){
+            console.log("Error");
+
+        }else{
+            console.log("Connected");
+            // const iplData = conn.db(dbName);
+            // iplData.collection(testMatchFile).findOne({}, function(err, result){
+            //     if(err){
+            //         collection.log("Error 2");
+            //     }else{
+            //         console.log(result.name);
+            //     }
+            // })
+        }
+     });
+     // const iplData = conn.db(dbName);
+     // let matchData = await iplData.collection(testMatchFile).aggregate([
+     //    {
+     //        $group:{
+     //            _id:"$season",
+     //            winner: {
+     //                $sum: 1
+     //            }
+     //        }
+     //    },
+     //    {
+     //        $project:{
+     //            _id: 0,
+     //            name: "$_id",
+     //            y: "$winner"
+     //        }
+     //    },
+     //    {
+     //        $sort:{
+     //            name: 1
+     //        }
+     //    }
+     //    ]).toArray();
+     // return matchData;
 }
 
 
-// async function getAllWinnerPerYear(MongoClient,dbName, matchsFile, url){
-// 	const conn = await MongoClient.connect(url, {useNewUrlParser: true});
-// 	const iplData = conn.db(dbName);
-// 	let matchData = await iplData.collection(matchsFile).aggregate([
-// 	{
-// 		$group:{
-// 			_id:{
-// 				season : "$season",
-// 				team: "$winner",
-// 			},
-// 			count: {
-// 				$sum: 1
+// async function getNoOfMatchesPerYear(MongoClient,dbName,testMatchFile, url, res){
+// 	 const conn = await MongoClient.connect(url, {useNewUrlParser: true});
+//      const iplData = conn.db(dbName);
+//      let matchData = await iplData.collection(testMatchFile).aggregate([
+// 		{
+// 			$group:{
+// 				_id:"$season",
+// 				winner: {
+// 					$sum: 1
+// 				}
+// 			}
+// 		},
+// 		{
+// 			$project:{
+// 				_id: 0,
+// 				name: "$_id",
+// 				y: "$winner"
+// 			}
+// 		},
+// 		{
+// 			$sort:{
+// 				name: 1
 // 			}
 // 		}
-// 	},
-// 	{
-// 		$sort: {
-// 			_id: 1
-// 		}
-// 	},
-// 	{
-// 		$group:{
-// 			_id:"$_id.team",
-// 			number:{
-// 				$push: "$count"
-// 			},
-//             years:{
-//                 $push: "$_id.season"
-//             }
-// 		}
-// 	},
-// 	{
-// 		$project:{
-// 			_id: 1,
-// 			number: 1,
-//             years: 1
-// 		}
-// 	}
-// 	]).toArray();
-// 	return matchData;
+// 		]).toArray();
+// 	 return matchData;
 // }
+
+// const MongoClient = require('mongodb').MongoClient;
+// const url = "mongodb://localhost:27017";
+// const dbName = "testDataIpl";
+// const testMatchFile = "seasonOfMatches";
+// // const dbName = "ipl-data";
+// // const testMatchFile = "matches";
+// // const testDeliveryFile = "deliveryOfExtraRun";
+// getNoOfMatchesPerYear(MongoClient,dbName,testMatchFile, url).then(function(data){
+//  console.log(data);
+// });
+ 
 async function getAllWinnerPerYear(MongoClient,dbName, matchsFile, url){
     const conn = await MongoClient.connect(url, {useNewUrlParser: true});
     const iplData = conn.db(dbName);
@@ -103,20 +116,12 @@ async function getAllWinnerPerYear(MongoClient,dbName, matchsFile, url){
         $project:{
             _id: 1,
             number: 1,
-            years: 1
+            years: 1,
         }
     }
     ]).toArray();
     return matchData;
 }
-// const MongoClient = require('mongodb').MongoClient;
-// const url = "mongodb://localhost:27017";
-// const dbName = "testDataIpl";
-// const testMatchFile = "seasonOfMatches";
-// const testDeliveryFile = "deliveryOfExtraRun";
-// getAllWinnerPerYear(MongoClient,dbName,testMatchFile,url).then(function(data){
-//  console.log(data);
-// });
 
 async function getExtraRunIn2016(MongoClient,dbName, matchesFile, deliveriesFile, url){
 	const conn = await MongoClient.connect(url, {useNewUrlParser: true});

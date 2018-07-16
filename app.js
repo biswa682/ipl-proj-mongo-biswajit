@@ -2,6 +2,9 @@ const express = require("express");
 const path = require("path");
 const operations = require("./src/operations");
 const MongoClient = require('mongodb').MongoClient;
+const url = "mongodb://localhost:27017";
+const dbName = "ipl-dat";
+
 const app = express();
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
@@ -9,9 +12,7 @@ app.set('view engine', 'ejs');
 app.get("/", function(req, res){
 	res.render("index");
 });
-app.get('/first', async function(req, res){
-	const url = "mongodb://localhost:27017";
-	const dbName = "ipl-data";
+app.get('/first', async function(req, res){	
 	const matchData = "matches";
 	const data = await operations.getNoOfMatchesPerYear(MongoClient, dbName, matchData, url);
 	res.render("noOfMatches", {data: JSON.stringify(data)});
@@ -49,6 +50,6 @@ app.get('/fifth', async function(req,res){
 	res.render("strikerateOfBatsman",{data: JSON.stringify(data)});
 });
 
-app.listen(3000, function(){
+app.listen(3002, function(){
 	console.log("Server is running .........");
 })
